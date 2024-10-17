@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI News Scanner</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>AI News Scanner</h1>
+        <div id="news-container">
+            <p>Loading news...</p>
+        </div>
+        <button id="refresh-btn">Refresh News</button>
+    </div>
+
+    <script>
+        async function fetchNews() {
+            const response = await fetch('/api/news');
+            const newsData = await response.json();
+            displayNews(newsData);
+        }
+
+        function displayNews(newsData) {
+            const newsContainer = document.getElementById('news-container');
+            newsContainer.innerHTML = '';  // Clear previous news
+
+            newsData.forEach(article => {
+                const newsDiv = document.createElement('div');
+                newsDiv.classList.add('news-article');
+
+                const title = document.createElement('h2');
+                title.textContent = article.title;
+
+                const summary = document.createElement('p');
+                summary.textContent = article.summary;
+
+                const link = document.createElement('a');
+                link.href = article.url;
+                link.textContent = "Read more";
+                link.target = "_blank";
+
+                newsDiv.appendChild(title);
+                newsDiv.appendChild(summary);
+                newsDiv.appendChild(link);
+                newsContainer.appendChild(newsDiv);
+            });
+        }
+
+        document.getElementById('refresh-btn').addEventListener('click', fetchNews);
+
+        // Fetch news on page load
+        fetchNews();
+    </script>
+</body>
+</html>

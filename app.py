@@ -5,10 +5,11 @@ from transformers import pipeline
 app = Flask(__name__)
 
 # AI model for summarization
-summarizer = pipeline("summarization")
+summarizer = pipeline("summarization", model="path/to/local/model")
+
 
 # Your News API Key
-NEWS_API_KEY = 'your_news_api_key'  # Get this from https://newsapi.org/
+NEWS_API_KEY = '9ae45e3cf5e643d2b7d6cade4ae0aff3'  # Get this from https://newsapi.org/
 
 def get_news():
     """Fetch news headlines from News API."""
